@@ -21,10 +21,9 @@ else
 fi
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 
-PROMPT="╭─$fg[green] BusterBot ${current_dir} ${rvm_ruby} ${git_branch}
+PROMPT="╭─$fg[green] $COMPUTER_NAME ${current_dir} ${rvm_ruby} ${git_branch}
 ╰─%B${user_symbol}%b "
 RPS1="%B${return_code}%b"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}‹"
 ZSH_THEME_GIT_PROMPT_SUFFIX="› %{$reset_color%}"
-
