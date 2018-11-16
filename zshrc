@@ -6,6 +6,14 @@ export PATH=/usr/local/bin:$HOME/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/minaslater/.oh-my-zsh
 
+# Enables shell history in IEX
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+# Add Android Home
+export ANDROID_HOME=$HOME/Library/Android/sdk
+
+export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -60,7 +68,7 @@ alias a="atom"
 alias jarvis="ssh mina@jarvis.webhop.me"
 
 # Git commands
-alias gits="git status"
+alias st="git status"
 alias co="git checkout"
 alias cob="git checkout -b"
 alias gita.="git add ."
@@ -132,4 +140,21 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export EDITOR="nvim"
 
-export PATH="$PATH:$HOME/.rvm/bin"
+# export PATH="$PATH:$HOME/.rvm/bin"
+
+
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+
+. "/usr/local/opt/nvm/nvm.sh"
+
+# Open Sublime
+function s {
+  if [ -n "$1" ]; then
+    open "$1" -a Sublime\ Text
+  else
+    open . -a Sublime\ Text
+  fi
+}
