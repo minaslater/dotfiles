@@ -51,7 +51,7 @@ fi
 
 # cask list
 brew tap caskroom/fonts
-OSX_APPS_List=(
+OSX_APPS_LIST=(
   "google-chrome"
   "firefox"
   "slack"
@@ -70,7 +70,7 @@ OSX_APPS_List=(
   "android-sdk"
 )
 
-for app in ${OSX_APPS_List[@]}; do
+for app in ${OSX_APPS_LIST[@]}; do
   if brew cask list | grep $app; then
     fancy_echo "$app: Found."
   else
@@ -108,7 +108,7 @@ BREW_APPS_LIST=(
   "redis"
 )
 
-for app in ${BREW_APPS_List[@]}; do
+for app in ${BREW_APPS_LIST[@]}; do
   if brew list | grep $app; then
     fancy_echo "$app: Found."
   else
