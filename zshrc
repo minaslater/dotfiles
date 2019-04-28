@@ -4,7 +4,7 @@
 export PATH=/usr/local/bin:$HOME/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/minaslater/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Enables shell history in IEX
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -60,8 +60,16 @@ setopt auto_cd
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-alias zshconfig="atom ~/.zshrc"
-alias ohmyzsh="atom ~/.oh-my-zsh"
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+rails ruby node colored-man-pages osx yarn alias-tips zsh-autosuggestions
+)
+
+alias zshconfig="atom ~/.dotfiles/zshrc"
+alias zshsource="source ~/.dotfiles/zshrc"
 alias v="nvim"
 alias gitclown="git clone"
 alias a="atom"
@@ -71,13 +79,32 @@ alias jarvis="ssh mina@jarvis.webhop.me"
 alias st="git status"
 alias co="git checkout"
 alias cob="git checkout -b"
-alias gita.="git add ."
+alias ga.="git add ."
+alias gap="git add -p"
 alias gcm="git commit -m"
-alias pullmaster="git pull origin master"
+alias gpmaster="git pull origin master"
+alias gas="git add */__snapshots__/*"
+alias gag="git add *.graphql.js"
+alias gags="git add *.graphql.js */__snapshots__/*"
+alias gca="git commit --amend --no-edit"
+alias glo="git log --oneline"
+alias gcleanup='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
 # Railsy things
 alias be="bundle exec"
+alias berf="bundle exec rspec --only-failures"
 alias rtest="RUBYOPT='-W0' rails test"
+alias ber="bundle exec rspec"
+alias rs="rails s"
+alias rc="rails c"
+alias redo="rails db:reset"
+
+#Mirs
+alias mirsf="cd ~/Projects/mirs-frontend-xwing"
+alias mirsb="cd ~/Projects/mirs-backend-yavin"
+alias graph="rake graph && cp schema.json ../mirs-frontend-xwing/"
+alias apache="cd /usr/local/etc/httpd/"
+alias httpd="cd /usr/local/etc/httpd/"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -86,14 +113,6 @@ alias rtest="RUBYOPT='-W0' rails test"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git rails ruby node vi-mode colored-man-pages osx yarn zsh-navigation-tools alias-tips zsh-autosuggestions
-)
 
 if [[ "$CASE_SENSITIVE" = true ]]; then
   zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
@@ -146,15 +165,8 @@ export EDITOR="nvim"
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
 
+# Comment this out, install NVM: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+# Then uncomment
 export NVM_DIR="$HOME/.nvm"
 
 . "/usr/local/opt/nvm/nvm.sh"
-
-# Open Sublime
-function s {
-  if [ -n "$1" ]; then
-    open "$1" -a Sublime\ Text
-  else
-    open . -a Sublime\ Text
-  fi
-}

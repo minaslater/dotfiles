@@ -41,14 +41,6 @@ else
   chsh -s /bin/zsh
 fi
 
-# oh-my-zsh
-if [ ! -d ~/.oh-my-zsh ]; then
-  fancy_echo "oh-my-zsh: Not Found. Installing..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-else
-  fancy_echo "oh-my-zsh: Found."
-fi
-
 # cask list
 brew tap caskroom/fonts
 OSX_APPS_LIST=(
@@ -120,6 +112,14 @@ done
 # run rcm
 if brew list | grep "rcm" > /dev/null; then
   rcup -v -v -v -v -d ~/.dotfiles
+fi
+
+# oh-my-zsh
+if [ ! -d ~/.oh-my-zsh ]; then
+  fancy_echo "oh-my-zsh: Not Found. Installing..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+else
+  fancy_echo "oh-my-zsh: Found."
 fi
 
 # start Postgres
