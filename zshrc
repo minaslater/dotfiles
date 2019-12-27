@@ -13,6 +13,8 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export ANDROID_HOME=$HOME/Library/Android/sdk
 
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -71,12 +73,18 @@ rails ruby node colored-man-pages osx yarn alias-tips zsh-autosuggestions
 alias zshconfig="atom ~/.dotfiles/zshrc"
 alias zshsource="source ~/.dotfiles/zshrc"
 alias v="nvim"
-alias gitclown="git clone"
+
 alias a="atom"
 alias jarvis="ssh mina@jarvis.webhop.me"
 
+alias up="bundle exec rackup -p 3000"
+
+# yarn commands
+alias yfix="yarn lint:fix"
+
 # Git commands
 alias st="git status"
+alias gslap="git log --oneline --decorate --graph --all"
 alias co="git checkout"
 alias cob="git checkout -b"
 alias ga.="git add ."
@@ -90,11 +98,16 @@ alias gca="git commit --amend --no-edit"
 alias glo="git log --oneline"
 alias gcleanup='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 
+ggrep() {
+  git log --grep=$1
+}
+
 # Railsy things
 alias be="bundle exec"
 alias berf="bundle exec rspec --only-failures"
 alias rtest="RUBYOPT='-W0' rails test"
 alias ber="bundle exec rspec"
+alias bera="bundle exec rubocop -a"
 alias rs="rails s"
 alias rc="rails c"
 alias redo="rails db:reset"
@@ -105,6 +118,10 @@ alias mirsb="cd ~/Projects/mirs-backend-yavin"
 alias graph="rake graph && cp schema.json ../mirs-frontend-xwing/"
 alias apache="cd /usr/local/etc/httpd/"
 alias httpd="cd /usr/local/etc/httpd/"
+
+#Docker
+alias dcr="docker-compose run"
+alias dber="docker-compose run app bundle exec rspec"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
