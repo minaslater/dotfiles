@@ -67,7 +67,7 @@ setopt auto_cd
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-rails ruby node colored-man-pages osx yarn alias-tips zsh-autosuggestions
+rails ruby node colored-man-pages osx yarn alias-tips zsh-autosuggestions docker-compose docker wd
 )
 
 alias zshconfig="atom ~/.dotfiles/zshrc"
