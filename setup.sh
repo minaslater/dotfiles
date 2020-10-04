@@ -55,11 +55,12 @@ OSX_APPS_LIST=(
   "docker"
   "font-fantasquesansmono-nerd-font-mono"
   "fastlane"
-  "atom"
+  "vs-code"
   "qlmarkdown"
   "quicklook-json"
   "android-studio"
   "android-sdk"
+  "postgres"
 )
 
 for app in ${OSX_APPS_LIST[@]}; do
@@ -85,7 +86,6 @@ BREW_APPS_LIST=(
   "neovim"
   "imagemagick"
   "openssl"
-  "postgresql"
   "python@2"
   "python3"
   "yarn"

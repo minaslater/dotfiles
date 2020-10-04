@@ -70,17 +70,23 @@ plugins=(
 rails ruby node colored-man-pages osx yarn alias-tips zsh-autosuggestions docker-compose docker wd
 )
 
-alias zshconfig="atom ~/.dotfiles/zshrc"
+alias zshconfig="nvim ~/.dotfiles/zshrc"
 alias zshsource="source ~/.dotfiles/zshrc"
 alias v="nvim"
+alias cleanhosts="cat /dev/null > ~/.ssh/known_hosts"
 
-alias a="atom"
+# Personal
+alias notes="open ~/Desktop/notes.code-workspace"
+alias blogs="open ~/Desktop/blogging.code-workspace"
+
+
 alias jarvis="ssh mina@jarvis.webhop.me"
 
 alias up="bundle exec rackup -p 3000"
 
 # yarn commands
 alias yfix="yarn lint:fix"
+alias yst="yarn start"
 
 # Git commands
 alias st="git status"
@@ -96,7 +102,9 @@ alias gag="git add *.graphql.js"
 alias gags="git add *.graphql.js */__snapshots__/*"
 alias gca="git commit --amend --no-edit"
 alias glo="git log --oneline"
-alias gcleanup='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
+alias gup="git push -u origin head"
+alias gcleanup='git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done'
+alias glast='git log -1 --format=full'
 
 ggrep() {
   git log --grep=$1
@@ -105,7 +113,6 @@ ggrep() {
 # Railsy things
 alias be="bundle exec"
 alias berf="bundle exec rspec --only-failures"
-alias rtest="RUBYOPT='-W0' rails test"
 alias ber="bundle exec rspec"
 alias bera="bundle exec rubocop -a"
 alias rs="rails s"
@@ -113,11 +120,15 @@ alias rc="rails c"
 alias redo="rails db:reset"
 
 #Mirs
-alias mirsf="cd ~/Projects/mirs-frontend-xwing"
-alias mirsb="cd ~/Projects/mirs-backend-yavin"
+alias mirsf="cd ~/Projects/aws-mirs/mirs-frontend-xwing"
+alias mirsb="cd ~/Projects/aws-mirs/mirs-backend-yavin"
+alias mirscli="cd ~/Projects/aws-mirs/mirs-cli"
+alias cac="ssh-add -s /usr/lib/ssh-keychain.dylib"
 alias graph="rake graph && cp schema.json ../mirs-frontend-xwing/"
 alias apache="cd /usr/local/etc/httpd/"
 alias httpd="cd /usr/local/etc/httpd/"
+alias token=". ~/Projects/aws-mirs/get_session_token_mfa.sh"
+alias omirs="open ~/Desktop/mirs2020.code-workspace"
 
 #Docker
 alias dcr="docker-compose run"
@@ -187,3 +198,16 @@ eval "$(rbenv init -)"
 export NVM_DIR="$HOME/.nvm"
 
 . "/usr/local/opt/nvm/nvm.sh"
+export PATH="$HOME/Projects/aws-mirs/mirs-cli/bin:${PATH}"
+
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc

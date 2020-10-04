@@ -1,2 +1,26 @@
 [user]
 	email = slater.mina@gmail.com
+[includeIf "gitdir:~/Projects/aws-mirs/"]
+	path = "~/Projects/aws-mirs/.gitconfig"
+[credential]
+	helper = !aws codecommit credential-helper $@
+	UseHttpPath = true
+[alias]
+  l = log --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Cgreen(%cr) %C(bold blue)<%an> %Creset %s' --abbrev-commit --date=relative --max-count=10
+  ll = log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Cgreen(%cr) %C(bold blue)<%an> %Creset %s' --abbrev-commit --date=relative --max-count=20
+  lll = log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Cgreen(%cr) %C(bold blue)<%an> %Creset %s' --abbrev-commit --date=relative --max-count=100
+  llll = log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Cgreen(%cr) %C(bold blue)<%an> %Creset %s' --abbrev-commit --date=relative --max-count=400
+  this = !git init && git add . && git commit -m "Initial commit"
+  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+  tidy = "!f() { \
+    if [[ ! -z $1 && $1 != '--dry-run' && $1 != '-d' ]]; then \
+      if [[ $2 == '--dry-run' || $2 == '-d' ]]; then \
+        git checkout $1 && git remote prune origin && git branch --merged | grep -vE '^[ \\*]*(dev|master|staging|testing|develop)$' | awk '{print $1}'; \
+      else \
+        git checkout $1 && git remote prune origin && git branch --merged | grep -vE '^[ \\*]*(dev|master|staging|testing|develop)$' | awk '{print $1}' | xargs git branch -D; \
+      fi \
+    else \
+      echo '\n\nUsage: git tidy <base branch> [--dry-run|-d]\n\n'; \
+    fi; \
+    }; f"
+
