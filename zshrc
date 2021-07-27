@@ -119,17 +119,6 @@ alias rs="rails s"
 alias rc="rails c"
 alias redo="rails db:reset"
 
-#Mirs
-alias mirsf="cd ~/Projects/aws-mirs/mirs-frontend-xwing"
-alias mirsb="cd ~/Projects/aws-mirs/mirs-backend-yavin"
-alias mirscli="cd ~/Projects/aws-mirs/mirs-cli"
-alias cac="ssh-add -s /usr/lib/ssh-keychain.dylib"
-alias graph="rake graph && cp schema.json ../mirs-frontend-xwing/"
-alias apache="cd /usr/local/etc/httpd/"
-alias httpd="cd /usr/local/etc/httpd/"
-alias token=". ~/Projects/aws-mirs/get_session_token_mfa.sh"
-alias omirs="open ~/Desktop/mirs2020.code-workspace"
-
 #Docker
 alias dcr="docker-compose run"
 alias dber="docker-compose run app bundle exec rspec"
@@ -189,6 +178,8 @@ export EDITOR="nvim"
 
 # export PATH="$PATH:$HOME/.rvm/bin"
 
+# make latest installed Swift toolchain available
+export TOOLCHAINS=swift
 
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
@@ -198,7 +189,7 @@ eval "$(rbenv init -)"
 export NVM_DIR="$HOME/.nvm"
 
 . "/usr/local/opt/nvm/nvm.sh"
-export PATH="$HOME/Projects/aws-mirs/mirs-cli/bin:${PATH}"
+export PATH="/Users/minatandem/Library/Python/3.9/bin:${PATH}"
 
 autoload -U add-zsh-hook
 load-nvmrc() {
@@ -211,3 +202,6 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/minatandem/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;

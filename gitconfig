@@ -1,7 +1,5 @@
 [user]
 	email = slater.mina@gmail.com
-[includeIf "gitdir:~/Projects/aws-mirs/"]
-	path = "~/Projects/aws-mirs/.gitconfig"
 [credential]
 	helper = !aws codecommit credential-helper $@
 	UseHttpPath = true
