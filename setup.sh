@@ -52,7 +52,7 @@ for app in ${OSX_APPS_LIST[@]}; do
     fancy_echo "$app: Found."
   else
     fancy_echo "$app: Not Found. Installing..."
-    brew cask install $app
+    brew  install --cask $app
   fi
 done
 
