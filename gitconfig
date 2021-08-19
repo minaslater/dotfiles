@@ -1,8 +1,5 @@
 [user]
 	email = slater.mina@gmail.com
-[credential]
-	helper = !aws codecommit credential-helper $@
-	UseHttpPath = true
 [alias]
   l = log --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Cgreen(%cr) %C(bold blue)<%an> %Creset %s' --abbrev-commit --date=relative --max-count=10
   ll = log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Cgreen(%cr) %C(bold blue)<%an> %Creset %s' --abbrev-commit --date=relative --max-count=20

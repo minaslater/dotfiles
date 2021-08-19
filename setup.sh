@@ -30,37 +30,21 @@ else
   brew update
 fi
 
-# zsh
-if [ $SHELL == "/bin/zsh" ]; then
-  fancy_echo "Zsh: Found."
-else
-  fancy_echo "Zsh: Not Found. Installing..."
-  brew install zsh
-
-  fancy_echo "Set Zsh as default."
-  chsh -s /bin/zsh
-fi
-
 # cask list
-brew tap caskroom/fonts
 OSX_APPS_LIST=(
   "google-chrome"
-  "firefox"
   "slack"
   "alfred"
   "iterm2"
-  "spectacle"
+	"postico"
+  "rectangle"
+	"1password"
+	"lastpass"
   "spotify"
   "graphiql"
   "docker"
-  "font-fantasquesansmono-nerd-font-mono"
-  "fastlane"
   "vs-code"
-  "qlmarkdown"
-  "quicklook-json"
-  "android-studio"
-  "android-sdk"
-  "postgres"
+	"zoom"
 )
 
 for app in ${OSX_APPS_LIST[@]}; do
@@ -92,12 +76,13 @@ BREW_APPS_LIST=(
   "the_silver_searcher"
   "rcm"
   "z"
+	"nvm"
   "fzf"
-  "rbenv"
   "node"
   "heroku"
   "httpie"
   "redis"
+	"awscli"
 )
 
 for app in ${BREW_APPS_LIST[@]}; do
@@ -122,14 +107,23 @@ else
   fancy_echo "oh-my-zsh: Found."
 fi
 
-# start Postgres
-brew services start postgresql
+## Install Ruby +
+if [ ! -d $HOME/.rvm ]; then
+  fancy_echo "RVM not found, installing"
+  \curl -sSL https://get.rvm.io | bash -s stable
+else
+  fancy_echo "RVM found, continuing"
+fi
 
-# install ruby
-rbenv install 2.5.3 -s
-rbenv init
-eval "$(rbenv init -)"
-rbenv global 2.5.3
+rvm -v 1> /dev/null
+if [ $? != 0 ]; then
+  fancy_echo "After this script, start a new shell session to initialize rvm and run the following command"
+  fancy_echo "rvm install 3.0.0 && gem install bundler rubocop reek solargraph rails"
+else
+  fancy_echo "Installing ruby 3.0.0"
+  rvm reload
+  rvm install 3.0.0
+fi
 
 # Ruby Gems
 GEMS_LIST=(
@@ -155,24 +149,8 @@ done
 
 # npm list
 NPM_LIST=(
-  "typescript"
-  "javascript-typescript-langserver"
   "prettier"
-  "babel"
-  "eslint"
-  "babel-eslint"
-  "eslint-config-standard"
-  "eslint-config-standard-react"
-  "eslint-config-standard-jsx"
-  "eslint-plugin-react"
-  "eslint-config-prettier"
-  "eslint-plugin-prettier"
   "create-react-app"
-  "create-react-library"
-  "react-native-cli"
-  "bash-language-server"
-  "neovim"
-  "gatsby-cli"
 )
 
 for package in ${NPM_LIST[@]}; do
@@ -193,9 +171,6 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Opens vim to install plugins
 nvim -u "NONE" -c ":silent source ~/.config/nvim/init.vim" -c ":silent PluginInstall" -c ":silent UpdateRemotePlugins" +qa!
-
-# install marker - cli commands fuzzy finder
-python ~/.dotfiles/marker/install.py
 
 # OSX system settings
 osascript -e 'tell application "System Preferences" to quit'
@@ -226,8 +201,9 @@ echo "Disable press-and-hold for keys in favor of key repeat"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Add some login items
-echo "Add Spectacle as login item"
-osascript -e 'tell application "System Events" to make login item at end with properties {name: "Spectacle",path:"/Applications/Spectacle.app", hidden:false}'
+echo "Add Rectangle as login item"
+osascript -e 'tell application "System Events" to make login item at end with properties {name: "Rectangle",path:"/Applications/Rectangle.app", hidden:false}'
+
 echo "Add Alfred as login item"
 osascript -e 'tell application "System Events" to make login item at end with properties {name: "Alfred 3",path:"/Applications/Alfred 3.app", hidden:false}'
 

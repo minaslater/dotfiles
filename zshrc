@@ -181,9 +181,6 @@ export EDITOR="nvim"
 # make latest installed Swift toolchain available
 export TOOLCHAINS=swift
 
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-
 # Comment this out, install NVM: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 # Then uncomment
 export NVM_DIR="$HOME/.nvm"
