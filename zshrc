@@ -67,7 +67,7 @@ setopt auto_cd
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-rails ruby node colored-man-pages osx yarn alias-tips zsh-autosuggestions docker-compose docker wd
+rails ruby node colored-man-pages osx yarn alias-tips docker-compose docker wd
 )
 
 alias zshconfig="nvim ~/.dotfiles/zshrc"
@@ -183,10 +183,8 @@ export TOOLCHAINS=swift
 
 # Comment this out, install NVM: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 # Then uncomment
-export NVM_DIR="$HOME/.nvm"
-
-. "/usr/local/opt/nvm/nvm.sh"
-export PATH="/Users/minatandem/Library/Python/3.9/bin:${PATH}"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 autoload -U add-zsh-hook
 load-nvmrc() {
@@ -201,4 +199,8 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
 # heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/minatandem/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+HEROKU_AC_ZSH_SETUP_PATH=/Users/minaslater/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+
+# for autosuggestions 
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#FFFFFF,bold"

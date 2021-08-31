@@ -22,7 +22,7 @@ else
 fi
 
 # Homebrew
-if [ ! -f /usr/local/bin/brew ]; then
+if [ ! -f /opt/homebrew/bin/brew ]; then
   fancy_echo "Homebrew: Not Found. Installing..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
@@ -36,19 +36,19 @@ OSX_APPS_LIST=(
   "slack"
   "alfred"
   "iterm2"
-	"postico"
+  "postico"
   "rectangle"
-	"1password"
-	"lastpass"
+  "1password"
+  "lastpass"
   "spotify"
   "graphiql"
   "docker"
   "vs-code"
-	"zoom"
+  "zoom"
 )
 
 for app in ${OSX_APPS_LIST[@]}; do
-  if brew cask list | grep $app; then
+  if brew list --cask | grep $app; then
     fancy_echo "$app: Found."
   else
     fancy_echo "$app: Not Found. Installing..."
@@ -76,13 +76,13 @@ BREW_APPS_LIST=(
   "the_silver_searcher"
   "rcm"
   "z"
-	"nvm"
+  "nvm"
   "fzf"
   "node"
   "heroku"
   "httpie"
   "redis"
-	"awscli"
+  "awscli"
 )
 
 for app in ${BREW_APPS_LIST[@]}; do

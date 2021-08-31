@@ -7,4 +7,9 @@
 
 ## Install Manually
 [Postgres](https://postgresapp.com/)
+
 [Giphy Capture](https://giphy.com/apps/giphycapture)
+
+[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+
+[alias-tips](https://github.com/djui/alias-tips)
