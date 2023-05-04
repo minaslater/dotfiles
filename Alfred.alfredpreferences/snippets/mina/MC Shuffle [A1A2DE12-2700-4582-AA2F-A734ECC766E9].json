@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "%w(Akshith Joe Victoria Clarissa Olamide Mina Chris).shuffle.each { |name| puts name }",
+    "uid" : "A1A2DE12-2700-4582-AA2F-A734ECC766E9",
+    "name" : "MC Shuffle",
+    "keyword" : "mcs"
+  }
+}

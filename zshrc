@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 export PATH=/usr/local/bin:$HOME/bin:$PATH
+export PATH=.git/safe/../../bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
@@ -13,8 +14,11 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export ANDROID_HOME=$HOME/Library/Android/sdk
 
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
-export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export LDFLAGS="-L$(brew --prefix)/opt/openssl@1.1/lib"
+export CPPFLAGS="-I$(brew --prefix)/opt/openssl@1.1/include"
+
+# prevent constant MFA check for aws-vault
+export AWS_SESSION_TOKEN_TTL=10h
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -67,7 +71,7 @@ setopt auto_cd
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-rails ruby node colored-man-pages osx yarn alias-tips docker-compose docker wd
+rails ruby node colored-man-pages macos yarn alias-tips docker-compose docker wd
 )
 
 alias zshconfig="nvim ~/.dotfiles/zshrc"
@@ -78,15 +82,7 @@ alias cleanhosts="cat /dev/null > ~/.ssh/known_hosts"
 # Personal
 alias notes="open ~/Desktop/notes.code-workspace"
 alias blogs="open ~/Desktop/blogging.code-workspace"
-
-
-alias jarvis="ssh mina@jarvis.webhop.me"
-
-alias up="bundle exec rackup -p 3000"
-
-# yarn commands
-alias yfix="yarn lint:fix"
-alias yst="yarn start"
+alias keys="eval `ssh-agent -s`"
 
 # Git commands
 alias st="git status"
@@ -96,14 +92,11 @@ alias cob="git checkout -b"
 alias ga.="git add ."
 alias gap="git add -p"
 alias gcm="git commit -m"
-alias gpmaster="git pull origin master"
-alias gas="git add */__snapshots__/*"
-alias gag="git add *.graphql.js"
-alias gags="git add *.graphql.js */__snapshots__/*"
+alias gpmain="git pull origin main"
 alias gca="git commit --amend --no-edit"
 alias glo="git log --oneline"
 alias gup="git push -u origin head"
-alias gcleanup='git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done'
+alias gcleanup='git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base main $branch) && [[ $(git cherry main $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done'
 alias glast='git log -1 --format=full'
 
 ggrep() {
@@ -118,6 +111,7 @@ alias bera="bundle exec rubocop -a"
 alias rs="rails s"
 alias rc="rails c"
 alias redo="rails db:reset"
+alias pginstall="gem install pg -- --with-pg-config=/opt/homebrew/opt/libpq/bin/pg_config -v"
 
 #Docker
 alias dcr="docker-compose run"
@@ -145,6 +139,9 @@ unset CASE_SENSITIVE HYPHEN_INSENSITIVE
 zstyle ':completion:*' list-colors ''
 
 source $ZSH/oh-my-zsh.sh
+
+# .envrc hook
+eval "$(direnv hook zsh)"
 
 # User configuration
 
@@ -176,7 +173,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export EDITOR="nvim"
 
-# export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$HOME/.rvm/bin:$PATH"
 
 # make latest installed Swift toolchain available
 export TOOLCHAINS=swift
@@ -198,9 +195,21 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
+# aws-vault shortcuts
+wistia-aws () {
+  aws-vault exec wistia -- aws $@
+}
+
+wistia-terraform () {
+  aws-vault exec wistia -- terraform $@
+}
+
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=/Users/minaslater/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 # for autosuggestions 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#FFFFFF,bold"
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+source /Users/minaslater/.config/op/plugins.sh
